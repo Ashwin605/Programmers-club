@@ -1,0 +1,18 @@
+[
+  {
+    "_id": "1768022249094",
+    "createdAt": "2026-01-10T05:17:29.094Z",
+    "name": "Test User",
+    "email": "test@example.com",
+    "password": "$2b$10$CWRK1KrdHs/xA.ktcmFUZ.SPnX0OzZGSr4n82Pt1RxswvDpxWA5dO",
+    "role": "user"
+  },
+  {
+    "_id": "1775288870532",
+    "createdAt": "2026-04-04T07:47:50.532Z",
+    "name": "Admin User",
+    "email": "admin@vemu.com",
+    "password": "$2b$10$G7MH6colyDZuzH6Qo8MUCuLqf0Gq91IrCGSBKnlh4nsBBPORTz2Lq",
+    "role": "admin"
+  }
+]
