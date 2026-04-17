@@ -38,7 +38,7 @@ const Dashboard = () => {
             }
         };
 
-        if (user?.role === 'admin') {
+        if (user) {
             fetchRegistrations();
         }
     }, [user, activeTab]);
@@ -70,7 +70,7 @@ const Dashboard = () => {
 
         if (!authLoading && !user) {
             navigate('/login');
-        } else if (user?.role === 'admin') {
+        } else if (user) {
             fetchEvents();
         }
     }, [user, authLoading, navigate]);
@@ -149,7 +149,7 @@ const Dashboard = () => {
                     <h1 style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>Dashboard</h1>
                     <p style={{ color: '#9ca3af' }}>Welcome back, {user?.name}</p>
                 </div>
-                {user?.role === 'admin' && (
+                {user && (
                     <div style={{ display: 'flex', gap: '1rem' }}>
                         <button
                             onClick={() => setActiveTab('registrations')}

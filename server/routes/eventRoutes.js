@@ -4,7 +4,7 @@ import { protect, admin } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-router.route('/').get(getEvents).post(protect, admin, createEvent);
-router.route('/:id').get(getEventById).put(protect, admin, updateEvent).delete(protect, admin, deleteEvent);
+router.route('/').get(getEvents).post(protect, createEvent);
+router.route('/:id').get(getEventById).put(protect, updateEvent).delete(protect, deleteEvent);
 
 export default router;

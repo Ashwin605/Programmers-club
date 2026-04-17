@@ -13,43 +13,14 @@ const Events = () => {
         const fetchEvents = async () => {
             try {
                 const { data } = await axios.get('/api/events');
-                if (data && data.length > 0) {
+                if (Array.isArray(data)) {
                     setEvents(data);
                 } else {
-                    throw new Error("No events found");
+                    setEvents([]);
                 }
             } catch (err) {
-                console.error("API failed, using mock data:", err);
-                // Fallback Mock Data
-                setEvents([
-                    {
-                        _id: '1',
-                        title: 'Full Stack Workshop',
-                        description: 'Learn MERN stack from scratch in this 2-day hands-on workshop.',
-                        date: new Date('2025-02-15'),
-                        location: 'Lab 1',
-                        category: 'Workshop',
-                        image: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?q=80&w=2070&auto=format&fit=crop'
-                    },
-                    {
-                        _id: '2',
-                        title: 'HackTheFuture 2025',
-                        description: '24-hour hackathon to solve real-world problems using AI and Blockchain.',
-                        date: new Date('2025-03-10'),
-                        location: 'Main Auditorium',
-                        category: 'Hackathon',
-                        image: 'https://images.unsplash.com/photo-1504384308090-c54be3855833?q=80&w=1924&auto=format&fit=crop'
-                    },
-                    {
-                        _id: '3',
-                        title: 'Tech Talk: Graph Neural Networks',
-                        description: 'Deep dive into GNNs with Dr. Alan Turing (Guest Speaker).',
-                        date: new Date('2025-01-20'),
-                        location: 'Seminar Hall',
-                        category: 'Seminar',
-                        image: 'https://images.unsplash.com/photo-1544197150-b99a580bbcbf?q=80&w=2071&auto=format&fit=crop'
-                    }
-                ]);
+                console.error("API failed:", err);
+                setEvents([]);
             } finally {
                 setLoading(false);
             }
