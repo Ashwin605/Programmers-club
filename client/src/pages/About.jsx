@@ -49,6 +49,7 @@ const About = () => {
     { name: 'A Uday Varma', role: 'Member', image: 'https://ui-avatars.com/api/?name=A+Uday+Varma&background=random&size=256', github: 'https://github.com/arkadudayvarma', linkedin: 'https://www.linkedin.com/in/uday-varma-arkad-b3183338a' },
     { name: 'K Leela Vinayak', role: 'Member', image: 'https://ui-avatars.com/api/?name=K+Leela+Vinayak&background=random&size=256', github: 'https://github.com/leelavinayak', linkedin: 'https://www.linkedin.com/in/leelavinayak' },
     { name: 'C Ashwin', role: 'Member', image: 'https://ui-avatars.com/api/?name=C+Ashwin&background=random&size=256', github: 'https://github.com/Ashwin605' },
+    { name: 'Arif Shaik', role: 'Member', image: 'https://ui-avatars.com/api/?name=Arif+Shaik&background=random&size=256', github: 'https://github.com/arifshaik9122-cyber', linkedin: 'https://www.linkedin.com/in/arif-roshan-a2184b403?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app' },
   ];
 
   return (
