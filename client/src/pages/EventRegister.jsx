@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 // eslint-disable-next-line no-unused-vars
@@ -20,8 +20,21 @@ const EventRegister = () => {
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
 
-    // Mock getting event name (In real app, fetch from backend using ID)
-    const eventName = id ? id.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) : 'Event';
+    const [eventName, setEventName] = useState('Event...');
+
+    useEffect(() => {
+        const fetchEventName = async () => {
+            try {
+                const { data } = await axios.get(`/api/events/${id}`);
+                if (data && data.title) {
+                    setEventName(data.title);
+                }
+            } catch (error) {
+                console.error("Failed to fetch event details", error);
+            }
+        };
+        if (id) fetchEventName();
+    }, [id]);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -34,7 +47,7 @@ const EventRegister = () => {
         try {
             await axios.post('/api/registrations', {
                 ...formData,
-                event: eventName
+                event: id
             });
             setSuccess(true);
             setTimeout(() => {

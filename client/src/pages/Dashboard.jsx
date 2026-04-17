@@ -225,7 +225,7 @@ const Dashboard = () => {
                     {activeTab === 'registrations' ? (
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
                             {events.map(event => {
-                                const eventRegistrations = registrations.filter(r => r.event === event.title);
+                                const eventRegistrations = registrations.filter(r => r.event === event.id || r.event === event._id);
                                 return (
                                     <div key={event._id}>
                                         <h3 style={{ 

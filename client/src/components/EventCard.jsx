@@ -38,7 +38,7 @@ const EventCard = ({ event, index }) => (
             </span>
             <h3 style={{ fontSize: '1.25rem', marginBottom: '1rem' }}>{event.title}</h3>
             <p style={{ color: '#9ca3af', fontSize: '0.9rem', marginBottom: '1.5rem', flex: 1 }}>{event.description}</p>
-            <Link to={`/events/${event.title.replace(/\s+/g, '-').toLowerCase()}/register`} style={{ textDecoration: 'none' }}>
+            <Link to={`/events/${event.id || event._id}/register`} style={{ textDecoration: 'none' }}>
                 <button style={{ 
                     width: '100%', 
                     padding: '0.8rem', 
