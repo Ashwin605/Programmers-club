@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://programmersclub.vemu.edu.in/sitemap.xml

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import axios from 'axios';
 import EventCard from '../components/EventCard';
+import SEO from '../components/SEO';
 
 const Events = () => {
     const [events, setEvents] = useState([]);
@@ -68,6 +69,11 @@ const Events = () => {
 
     return (
         <div style={{ paddingTop: '100px', minHeight: '100vh' }} className="container">
+            <SEO 
+                title="Events & Hackathons | Vemu Institute of Technology Programming Club" 
+                description="Explore upcoming workshops, hackathons, and tech talks at Vemu IT Programming Club. Enhance your skills and network with the developer community."
+                keywords="Vemu IT events, programming club hackathon, workshops, tech talks, coding competitions"
+            />
             <motion.h1 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}

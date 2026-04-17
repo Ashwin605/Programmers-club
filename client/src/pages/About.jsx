@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion'; // eslint-disable-line
 import { FiGithub, FiLinkedin } from 'react-icons/fi';
+import SEO from '../components/SEO';
 
 const TeamMember = ({ name, role, image, github = "#", linkedin = "#" }) => (
   <motion.div 
@@ -54,6 +55,11 @@ const About = () => {
 
   return (
     <div className="container" style={{ paddingTop: '100px', paddingBottom: '4rem' }}>
+      <SEO 
+        title="About Us | Vemu Institute of Technology Programming Club" 
+        description="Learn more about the Vemu IT Programming Club team, our mission, and our vision to foster a culture of technical excellence and collaborative learning."
+        keywords="about Vemu IT programming club, Vemu IT team, tech club mission, programming community"
+      />
       {/* Hero Section */}
       <div style={{ textAlign: 'center', marginBottom: '5rem' }}>
         <motion.h1 

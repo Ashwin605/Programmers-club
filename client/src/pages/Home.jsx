@@ -5,13 +5,17 @@ import { Link } from 'react-router-dom';
 import { FiArrowRight, FiCode, FiUsers, FiCpu } from 'react-icons/fi';
 import EnhancedHeroAnimation from '../components/EnhancedHeroAnimation';
 import FloatingParticles from '../components/FloatingParticles';
+import SEO from '../components/SEO';
 
 const Home = () => {
 
-
-
     return (
         <div style={{ position: 'relative', overflow: 'hidden' }}>
+            <SEO 
+                title="Home | Vemu Institute of Technology Programming Club" 
+                description="Welcome to the Vemu IT Programming Club. We help students excel in coding, participate in hackathons, and build real-world software projects."
+                keywords="Vemu IT, programming club home, coding events, Vemu Institute of Technology"
+            />
             {/* Global Floating Particles */}
             <FloatingParticles count={30} sizeRange={[3, 12]} speedRange={[5, 12]} />
 

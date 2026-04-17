@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion'; // eslint-disable-line
 import { FiMail, FiMapPin, FiSend } from 'react-icons/fi';
+import SEO from '../components/SEO';
 
 const Contact = () => {
     const [formStatus, setFormStatus] = useState('idle'); // idle, submitting, success
@@ -14,6 +15,11 @@ const Contact = () => {
 
     return (
         <div className="container" style={{ paddingTop: '100px', paddingBottom: '4rem', minHeight: '100vh' }}>
+            <SEO 
+                title="Contact Us | Vemu Institute of Technology Programming Club" 
+                description="Get in touch with the Vemu IT Programming Club. Reach out for collaborations, queries, or just to say hello to our team."
+                keywords="contact Vemu IT programming club, get in touch, reach out, developers club contact"
+            />
             <motion.div 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
