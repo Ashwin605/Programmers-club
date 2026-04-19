@@ -248,6 +248,8 @@ const EventRegister = () => {
                                         <option value="MECH" style={{ color: 'black' }}>MECH</option>
                                         <option value="CIVIL" style={{ color: 'black' }}>CIVIL</option>
                                         <option value="AI&DS" style={{ color: 'black' }}>AI&DS</option>
+                                        <option value="AIML" style={{ color: 'black' }}>AIML</option>
+                                        <option value="AI" style={{ color: 'black' }}>AI</option>
                                     </select>
                                 </div>
                             </div>
