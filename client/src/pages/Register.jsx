@@ -197,9 +197,14 @@ const Register = () => {
                     </button>
                 </form>
 
-                <p style={{ textAlign: 'center', marginTop: '1.5rem', fontSize: '0.9rem', color: '#9ca3af' }}>
-                    Already have an account? <Link to="/login" style={{ color: '#6366f1', fontWeight: 600 }}>Login</Link>
-                </p>
+                <div style={{ marginTop: '2.5rem', paddingTop: '1.5rem', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+                    <p style={{ textAlign: 'center', fontSize: '0.9rem', color: '#9ca3af', margin: 0 }}>
+                        Already have an account?{' '}
+                        <Link to="/login" style={{ color: '#6366f1', fontWeight: 700, textDecoration: 'none' }}>
+                            Login here
+                        </Link>
+                    </p>
+                </div>
             </motion.div>
         </div>
     );

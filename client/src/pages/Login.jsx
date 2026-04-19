@@ -142,23 +142,12 @@ const Login = () => {
                     </button>
                 </form>
 
-                <p style={{ textAlign: 'center', marginTop: '2rem', fontSize: '0.9rem', color: '#9ca3af' }}>
-                    Don't have an account? <Link to="/register" style={{ color: '#6366f1', fontWeight: 600 }}>Register</Link>
-                </p>
-
-                {/* Admin Login Info */}
-                <div style={{
-                    marginTop: '2rem',
-                    padding: '1rem',
-                    background: 'rgba(99, 102, 241, 0.1)',
-                    border: '1px solid rgba(99, 102, 241, 0.3)',
-                    borderRadius: '12px',
-                    color: '#a5b4fc'
-                }}>
-                    <p style={{ margin: '0 0 0.5rem 0', fontSize: '0.85rem', fontWeight: 600 }}>👤 Admin Access</p>
-                    <p style={{ margin: '0', fontSize: '0.8rem', lineHeight: '1.4' }}>
-                        Email: <strong>ashwinsrichandra2008@gmail.com</strong><br />
-                        Password: <strong>ashwinsri@2008</strong>
+                <div style={{ marginTop: '2.5rem', paddingTop: '1.5rem', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+                    <p style={{ textAlign: 'center', fontSize: '0.9rem', color: '#9ca3af', margin: 0 }}>
+                        Don't have an account?{' '}
+                        <Link to="/register" style={{ color: '#6366f1', fontWeight: 700, textDecoration: 'none' }}>
+                            Register here
+                        </Link>
                     </p>
                 </div>
             </motion.div>

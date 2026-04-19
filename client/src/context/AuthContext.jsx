@@ -75,8 +75,13 @@ export const AuthProvider = ({ children }) => {
         const { data } = await axios.post('/api/auth/login', { email, password });
         localStorage.setItem('token', data.token);
         setToken(data.token); 
-        setUser(data);
-        return data;
+        // Ensure the user object has all necessary properties
+        const userData = {
+            ...data,
+            role: data.role || 'user' // Make sure role is set
+        };
+        setUser(userData);
+        return userData;
     } catch (error) {
         // Fallback for demo/offline mode
         if (email === 'ashwinsrichandra2008@gmail.com' && password === 'ashwinsri@2008') {

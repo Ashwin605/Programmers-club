@@ -4,7 +4,8 @@ import { motion } from 'framer-motion';
 import AuthContext from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { FiPlus, FiTrash2, FiEdit2, FiUsers, FiCalendar } from 'react-icons/fi';
+import { FiPlus, FiTrash2, FiEdit2, FiUsers, FiCalendar, FiDownload } from 'react-icons/fi';
+import { generateRegistrationsPDF } from '../utils/pdfGenerator';
 
 const Dashboard = () => {
     const { user, loading: authLoading } = useContext(AuthContext);
@@ -22,6 +23,7 @@ const Dashboard = () => {
         category: 'workshop'
     });
     const [isCreating, setIsCreating] = useState(false);
+    const [downloadingPDF, setDownloadingPDF] = useState(null);
     const navigate = useNavigate();
 
 
@@ -141,37 +143,35 @@ const Dashboard = () => {
         }
     };
 
+    // Download registrations as PDF
+    const handleDownloadRegistrations = async (event) => {
+        try {
+            setDownloadingPDF(event._id);
+            
+            // Get registrations for this event
+            const eventRegistrations = registrations.filter(r => r.event === event.id || r.event === event._id);
+            
+            // Generate and download PDF
+            const result = generateRegistrationsPDF(event, eventRegistrations);
+            
+            if (!result.success) {
+                throw new Error(result.error || 'Failed to generate PDF');
+            }
+        } catch (error) {
+            console.error('Failed to download registrations:', error);
+            alert('Failed to download registrations. Please try again.');
+        } finally {
+            setDownloadingPDF(null);
+        }
+    };
+
     // Data Moved Up for Stats Calculation
 
     if (authLoading) return <div className="container" style={{ paddingTop: '100px', textAlign: 'center' }}>Loading...</div>;
 
-    // Admin-only access check
+    // Admin-only access check - redirect if not admin
     if (!user || user.role !== 'admin') {
-        return (
-            <div className="container" style={{ paddingTop: '100px', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <div className="glass-panel" style={{ padding: '3rem', textAlign: 'center', maxWidth: '500px' }}>
-                    <h1 style={{ fontSize: '2rem', marginBottom: '1rem', color: '#ef4444' }}>Access Denied</h1>
-                    <p style={{ color: '#9ca3af', marginBottom: '2rem', fontSize: '1.1rem' }}>
-                        The Dashboard is only accessible to administrators. Please log in with admin credentials.
-                    </p>
-                    <button
-                        onClick={() => navigate('/login')}
-                        style={{
-                            background: 'var(--gradient-main)',
-                            padding: '0.8rem 2rem',
-                            borderRadius: '8px',
-                            color: 'white',
-                            fontWeight: 600,
-                            cursor: 'pointer',
-                            border: 'none',
-                            fontSize: '1rem'
-                        }}
-                    >
-                        Go to Login
-                    </button>
-                </div>
-            </div>
-        );
+        return null; // Redirect will happen in useEffect
     }
 
     return (
@@ -260,14 +260,41 @@ const Dashboard = () => {
                                 const eventRegistrations = registrations.filter(r => r.event === event.id || r.event === event._id);
                                 return (
                                     <div key={event._id}>
-                                        <h3 style={{ 
-                                            marginBottom: '1rem', 
-                                            paddingBottom: '0.5rem', 
-                                            borderBottom: '1px solid rgba(255,255,255,0.1)',
-                                            color: '#818cf8'
-                                        }}>
-                                            {event.title}
-                                        </h3>
+                                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', paddingBottom: '0.5rem', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+                                            <h3 style={{ 
+                                                margin: 0,
+                                                color: '#818cf8',
+                                                fontSize: '1.2rem',
+                                                fontWeight: 600
+                                            }}>
+                                                {event.title}
+                                            </h3>
+                                            {eventRegistrations.length > 0 && (
+                                                <button
+                                                    onClick={() => handleDownloadRegistrations(event)}
+                                                    disabled={downloadingPDF === event._id}
+                                                    style={{
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        gap: '0.5rem',
+                                                        background: 'rgba(34, 197, 94, 0.1)',
+                                                        color: '#22c55e',
+                                                        border: '1px solid rgba(34, 197, 94, 0.3)',
+                                                        padding: '0.5rem 1rem',
+                                                        borderRadius: '8px',
+                                                        cursor: downloadingPDF === event._id ? 'not-allowed' : 'pointer',
+                                                        fontSize: '0.9rem',
+                                                        fontWeight: 500,
+                                                        opacity: downloadingPDF === event._id ? 0.6 : 1,
+                                                        transition: 'all 0.2s ease'
+                                                    }}
+                                                    title="Download registrations as PDF"
+                                                >
+                                                    <FiDownload size={16} />
+                                                    {downloadingPDF === event._id ? 'Generating...' : 'Download PDF'}
+                                                </button>
+                                            )}
+                                        </div>
                                         {eventRegistrations.length > 0 ? (
                                             <table style={{ width: '100%', borderCollapse: 'collapse', color: '#e5e7eb' }}>
                                                 <thead>

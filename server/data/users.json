@@ -14,5 +14,13 @@
     "email": "admin@vemu.com",
     "password": "$2b$10$G7MH6colyDZuzH6Qo8MUCuLqf0Gq91IrCGSBKnlh4nsBBPORTz2Lq",
     "role": "admin"
+  },
+  {
+    "_id": "1776611948064",
+    "createdAt": "2026-04-19T15:19:08.064Z",
+    "name": "Ashwin Srichandra",
+    "email": "ashwinsrichandra2008@gmail.com",
+    "password": "$2b$10$CxYlGlPifUlObU6tLAr56eoqSKfDJO.IP/NqGKro/PqDiG51P77ZG",
+    "role": "admin"
   }
 ]
