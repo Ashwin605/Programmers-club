@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion'; // eslint-disable-line
 import { FiMenu, FiX, FiTerminal, FiLogOut } from 'react-icons/fi';
 import AuthContext from '../context/AuthContext';
@@ -8,7 +8,9 @@ const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [showAccessDenied, setShowAccessDenied] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,6 +19,16 @@ const Navbar = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleDashboardClick = (e) => {
+    e.preventDefault();
+    if (user && user.role === 'admin') {
+      navigate('/dashboard');
+    } else {
+      setShowAccessDenied(true);
+    }
+    setIsOpen(false);
+  };
 
   const navLinks = [
     { name: 'Home', path: '/' },
@@ -91,12 +103,21 @@ const Navbar = () => {
           
           {user ? (
             <div style={{ display: 'flex', alignItems: 'center', gap: '1.2rem' }}>
-                <Link 
-                  to="/dashboard"
-                  style={{ color: '#fff', textDecoration: 'none', fontSize: '0.95rem', fontWeight: 500 }}
+                <button 
+                  onClick={handleDashboardClick}
+                  style={{ 
+                    color: '#fff', 
+                    textDecoration: 'none', 
+                    fontSize: '0.95rem', 
+                    fontWeight: 500,
+                    background: 'none',
+                    border: 'none',
+                    cursor: 'pointer',
+                    padding: 0
+                  }}
                 >
                   Dashboard
-                </Link>
+                </button>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#9ca3af' }}>
                     <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#6366f1', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 600 }}>
                       {user.name.charAt(0).toUpperCase()}
@@ -114,7 +135,8 @@ const Navbar = () => {
                     borderRadius: '8px',
                     fontSize: '0.85rem',
                     fontWeight: 600,
-                    border: '1px solid rgba(239, 68, 68, 0.2)'
+                    border: '1px solid rgba(239, 68, 68, 0.2)',
+                    cursor: 'pointer'
                   }}
                   className="hover:bg-red-500/20"
                 >
@@ -190,13 +212,21 @@ const Navbar = () => {
                     {user ? (
                         <>
                             <div style={{ height: '1px', background: 'rgba(255,255,255,0.1)', margin: '1rem 0' }}></div>
-                            <Link 
-                                to="/dashboard"
-                                onClick={() => setIsOpen(false)}
-                                style={{ fontSize: '1.2rem', color: '#fff', fontWeight: 600 }}
+                            <button 
+                                onClick={handleDashboardClick}
+                                style={{ 
+                                  fontSize: '1.2rem', 
+                                  color: '#fff', 
+                                  fontWeight: 600,
+                                  background: 'none',
+                                  border: 'none',
+                                  cursor: 'pointer',
+                                  padding: 0,
+                                  textAlign: 'left'
+                                }}
                             >
                                 Dashboard
-                            </Link>
+                            </button>
                             <button 
                                 onClick={() => { logout(); setIsOpen(false); }}
                                 style={{ 
@@ -206,7 +236,11 @@ const Navbar = () => {
                                     color: '#ef4444', 
                                     fontSize: '1.2rem',
                                     fontWeight: 600,
-                                    textAlign: 'left'
+                                    textAlign: 'left',
+                                    background: 'none',
+                                    border: 'none',
+                                    cursor: 'pointer',
+                                    padding: 0
                                 }} 
                             >
                                 <FiLogOut /> Logout
@@ -231,6 +265,98 @@ const Navbar = () => {
                     )}
                 </motion.div>
             )}
+        </AnimatePresence>
+
+        {/* Access Denied Modal */}
+        <AnimatePresence>
+          {showAccessDenied && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setShowAccessDenied(false)}
+              style={{
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                background: 'rgba(0, 0, 0, 0.7)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                zIndex: 1000,
+                backdropFilter: 'blur(4px)'
+              }}
+            >
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.9, opacity: 0 }}
+                onClick={(e) => e.stopPropagation()}
+                style={{
+                  background: 'linear-gradient(135deg, rgba(20, 20, 40, 0.95) 0%, rgba(30, 20, 50, 0.95) 100%)',
+                  border: '1px solid rgba(239, 68, 68, 0.3)',
+                  borderRadius: '16px',
+                  padding: '2.5rem',
+                  maxWidth: '450px',
+                  width: '90%',
+                  textAlign: 'center',
+                  boxShadow: '0 20px 60px rgba(239, 68, 68, 0.1)'
+                }}
+              >
+                <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🔒</div>
+                <h2 style={{ 
+                  fontSize: '1.8rem', 
+                  fontWeight: 700, 
+                  marginBottom: '1rem',
+                  color: '#ef4444'
+                }}>
+                  Access Denied
+                </h2>
+                <p style={{ 
+                  color: '#d1d5db', 
+                  fontSize: '1rem', 
+                  marginBottom: '1.5rem',
+                  lineHeight: '1.6'
+                }}>
+                  The Dashboard is only accessible to administrators. Only admins can view and manage events through the dashboard.
+                </p>
+                <div style={{
+                  background: 'rgba(99, 102, 241, 0.1)',
+                  border: '1px solid rgba(99, 102, 241, 0.3)',
+                  borderRadius: '12px',
+                  padding: '1rem',
+                  marginBottom: '1.5rem',
+                  color: '#a5b4fc',
+                  fontSize: '0.9rem'
+                }}>
+                  <p style={{ margin: '0 0 0.5rem 0', fontWeight: 600 }}>Admin Credentials</p>
+                  <p style={{ margin: '0', fontSize: '0.85rem' }}>
+                    Contact your administrator if you believe you should have access.
+                  </p>
+                </div>
+                <button
+                  onClick={() => setShowAccessDenied(false)}
+                  style={{
+                    background: 'linear-gradient(135deg, #6366f1 0%, #a855f7 100%)',
+                    color: 'white',
+                    padding: '0.8rem 2rem',
+                    borderRadius: '8px',
+                    border: 'none',
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    fontSize: '1rem',
+                    transition: 'transform 0.2s ease'
+                  }}
+                  onMouseEnter={(e) => e.target.style.transform = 'scale(1.05)'}
+                  onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
+                >
+                  Understood
+                </button>
+              </motion.div>
+            </motion.div>
+          )}
         </AnimatePresence>
       </div>
     </nav>

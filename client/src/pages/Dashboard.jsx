@@ -70,7 +70,10 @@ const Dashboard = () => {
 
         if (!authLoading && !user) {
             navigate('/login');
-        } else if (user) {
+        } else if (!authLoading && user && user.role !== 'admin') {
+            // Redirect non-admin users
+            navigate('/');
+        } else if (user && user.role === 'admin') {
             fetchEvents();
         }
     }, [user, authLoading, navigate]);
@@ -141,6 +144,35 @@ const Dashboard = () => {
     // Data Moved Up for Stats Calculation
 
     if (authLoading) return <div className="container" style={{ paddingTop: '100px', textAlign: 'center' }}>Loading...</div>;
+
+    // Admin-only access check
+    if (!user || user.role !== 'admin') {
+        return (
+            <div className="container" style={{ paddingTop: '100px', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div className="glass-panel" style={{ padding: '3rem', textAlign: 'center', maxWidth: '500px' }}>
+                    <h1 style={{ fontSize: '2rem', marginBottom: '1rem', color: '#ef4444' }}>Access Denied</h1>
+                    <p style={{ color: '#9ca3af', marginBottom: '2rem', fontSize: '1.1rem' }}>
+                        The Dashboard is only accessible to administrators. Please log in with admin credentials.
+                    </p>
+                    <button
+                        onClick={() => navigate('/login')}
+                        style={{
+                            background: 'var(--gradient-main)',
+                            padding: '0.8rem 2rem',
+                            borderRadius: '8px',
+                            color: 'white',
+                            fontWeight: 600,
+                            cursor: 'pointer',
+                            border: 'none',
+                            fontSize: '1rem'
+                        }}
+                    >
+                        Go to Login
+                    </button>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="container" style={{ paddingTop: '100px', paddingBottom: '4rem', minHeight: '100vh' }}>
